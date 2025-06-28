@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Place Order</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+        (function () {
+            emailjs.init("NEpD3ujdTLO2yNDZZ"); 
+        })();
+    </script> -->
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fffdfb;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    header,
+    footer {
+      background-color: rgb(244, 236, 237);
+      padding: 1rem 2rem;
+      text-align: center;
+    }
+
+    header h1 {
+      color: black;
+      font-size: 2rem;
+    }
+
+    section {
+      max-width: 500px;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      color: black;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .payment-options {
+      margin-bottom: 15px;
+    }
+
+    .payment-options label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .radio-group input {
+      width: auto;
+      margin-right: 5px;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 10px;
+    }
+
+    button {
+      background-color: rgb(241, 145, 161);
+      color: white;
+      padding: 0.7rem 1.5rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: pink;
+    }
+
+    .cancel-button {
+      background-color: #ccc;
+      color: #333;
+    }
+
+    .cancel-button:hover {
+      background-color: #bbb;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Asthetic Outfits</h1>
+  </header>
+
+  <section>
+    <h2>Complete Your Order</h2>
+    <form id="order-form">
+      <input type="text" name="name" placeholder="Your Name" required />
+      <input type="email" name="email" placeholder="Your Email" required />
+      <input type="tel" name="mobile" placeholder="Mobile Number" required pattern="[0-9]{10}"
+        title="Enter 10-digit mobile number" />
+       <input type="text" name="product" id="product" readonly />
+      <input type="text" name="door" placeholder="Door Number" required />
+      <input type="text" name="street" placeholder="Street Name" required />
+      <input type="text" name="city" placeholder="City" required />
+      <input type="text" name="landmark" placeholder="Nearby Landmark" required />
+      <select name="state" required>
+        <option value="">Select State</option>
+        <option value="Andhra Pradesh">Andhra Pradesh</option>
+        <option value="Telangana">Telangana</option>
+        <option value="Tamil Nadu">Tamil Nadu</option>
+        <option value="Karnataka">Karnataka</option>
+        <option value="Kerala">Kerala</option>
+        <option value="Maharashtra">Maharashtra</option>
+        <option value="Delhi">Delhi</option>
+        <option value="Other">Other</option>
+      </select>
+      <input type="text" name="pincode" placeholder="Pincode (optional)" pattern="[0-9]{6}" title="6-digit pincode" />
+
+      <div class="payment-options">
+        <label>Select Payment Method:</label>
+        <div class="radio-group">
+          <label><input type="radio" name="payment" value="Cash on Delivery" required> Cash on Delivery</label>
+          <label><input type="radio" name="payment" value="UPI" required> UPI</label>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="submit" class="submit-button">Place Order</button>
+        <button type="button" class="cancel-button" onclick="window.location.href='index.html'">Cancel</button>
+      </div>
+    </form>
+  </section>
+
+  <footer>
+    &copy; 2025 . All rights reserved.
+  </footer>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+  </script>
+  <script type="text/javascript">
+    (function () {
+      emailjs.init({
+        publicKey: "YNEpD3ujdTLO2yNDZZ",
+      });
+    })();
+  </script>
+  <script>
+  const params = new URLSearchParams(window.location.search);
+  const product = params.get("product");
+  document.getElementById("product").value = product;
+
+    document.getElementById('order-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+      const formObject = Object.fromEntries(formData.entries());
+
+      emailjs.send("service_7jcyjq4", "template_wx6y4sm", formObject)
+        .then(function (response) {
+          window.location.href = "thankyou.html";
+        }, function (error) {
+          console.log(error);
+          alert("Failed to send message. Please try again later.");
+        });
+    });
+  </script>
+  <script>
+    emailjs.init("NEpD3ujdTLO2yNDZZ");
+    document.getElementById("test-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      const formObject = Object.fromEntries(formData.entries());
+
+      emailjs.send("service_7jcyjq4", "template_wx6y4sm", formObject)
+        .then(function (response) {
+          alert("Success!");
+        }, function (error) {
+          console.log("FAILED...", error);
+          alert("Failed to send.");
+        });
+    });
+  </script>
+
+</body>
+
+</html>
